@@ -1,0 +1,32 @@
+<html>
+　　<head>
+		<link href="{{ site.baseurl }}/favicon.png" rel="shortcut icon">
+　　	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<link href="{{ site.baseurl }}/bootstrap/css/bootstrap.css" rel="stylesheet">
+		<link href="{{ site.baseurl }}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+		{% include google-analytics.html %}
+　　　　<title>{{ page.title }}</title>
+　　</head>
+    <body style="background-image : url({{ site.baseurl }}/images/bg.jpg);">
+		 <div class="container">
+			<div class="site">
+				<div style="width:80%;margin:0px auto;">
+				<div class="header">
+				    <h1 class="title"><a href="{{ site.baseurl }}/index.html" title="首页">{{ site.name }}</a></h1>
+				</div>
+				   <hr/>
+				   <div style="font-family:微软雅黑,tahoma,宋体,rockwell,verdana,sans-serif;;font-size: 18px;line-height: 32px;">
+					{{ content }}
+				   </div>
+				   <br/>
+				   <div style="width:50%">
+					  <hr/>
+					  <a href="{{ site.baseurl }}/index.html">首页</a>&nbsp;&nbsp;<a href="https://github.com/LSS1990">我的GitHub</a>
+				   <br/><br/>
+				   </div>
+				 </div>
+			 </div>
+        </div>
+    </body>
+</html>
+
