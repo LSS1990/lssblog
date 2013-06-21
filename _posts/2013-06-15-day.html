@@ -6,9 +6,9 @@ tag: C++中前置++与后置++的区别
 首先是一段代码:
 	<pre>
 	 int a = 3;
-	 cout&lt&lta++&lt&lt++a&lt&lt endl;
+	 cout &lt&lt a++ &lt&lt ++a &lt&lt endl;
 	 a = 3;
-	 cout&lt&lt++a&lt&lta++&lt&lt endl;
+	 cout&lt&lt++a &lt&lt a++ &lt&lt endl;
 	 </pre>
 输出分别是45和53。
 原因是当函数传进来的不是变量而是一个表达式的时候，要先
