@@ -1,213 +1,303 @@
-一、父类与子类
-1.父类与子类的相互转换
+<p><strong>一、父类与子类</strong></p>
 
-派生类的对象可以赋给基类，反之不行
+<h2>1.父类与子类的相互转换</h2>
 
-基类的指针可以指向派生类，反之不行
-基类的引用可以初始化为派生类的对象，反之不行
-派生类指针必须强制转换为基类指针后才可以指向基类
+<p>派生类的对象可以赋给基类，反之不行</p>
 
-基类指针转换为派生类指针容易导致崩溃性错误
+<p>基类的指针可以指向派生类，反之不行<br />
+基类的引用可以初始化为派生类的对象，反之不行</p>
 
-虚基类的引用或派生不能转换为派生类
+<p>派生类指针必须强制转换为基类指针后才可以指向基类</p>
 
-[cpp]view plaincopy
-class father{};  
-class son:public father{};  
-int main()  
-{  
-    father f;  
-    son s;  
-    f = s;//正确
-    s = f;//错误
-    father *pf = new son;//正确
-    son *ps = new father;//错误
-    father &rf = s;//正确
-    father &rs = f;//错误
-return 0;  
-}  
+<p>基类指针转换为派生类指针容易导致崩溃性错误</p>
 
-2.继承关系对基类成员的影响
+<p>虚基类的引用或派生不能转换为派生类</p>
 
-公有成员	保护成员	私有成员
-公有继承	公有	保护	不可访问
-保护继承	保护	保护	不可访问
-私有继承	私有	私有	不可访问
-成员函数	1	1	1
-对象	1	0	0
-子类	1	1	0
-1：可以访问 0：不可访问
-当所有成员都变成不可访问时，再往下派生就没有意义了
-二、子类的构造与析构
-1.构造派生类对象时，先执行基类的构造函数，再执行子类的构造函数，析构反之
-[cpp]view plaincopy
-class father  
-{  
-public:  
-    father(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"father construct"< endlspan>
-    ~father(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"father delete"< endlspan>
-};  
-class son : public father  
-{  
-public:  
-    son(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"son construct"< endlspan>
-    ~son(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"son delete"< endlspan>
-};  
-int main()  
-{  
-    son s;  
-return 0;  
-}  
+<p>&nbsp;</p>
 
-输出：
+<p><strong>[cpp]</strong>view plaincopy</p>
 
-father construct
-son construct
-son delete
-father delete
+<ol>
+	<li><strong>class</strong>&nbsp;father{};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;son:<strong>public</strong>&nbsp;father{};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;f;&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;=&nbsp;s;//正确</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;f;//错误</li>
+	<li>&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;*pf&nbsp;=&nbsp;<strong>new</strong>&nbsp;son;//正确</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;*ps&nbsp;=&nbsp;<strong>new</strong>&nbsp;father;//错误</li>
+	<li>&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;&amp;rf&nbsp;=&nbsp;s;//正确</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;&amp;rs&nbsp;=&nbsp;f;//错误</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
 
-2.如果是多重继承，基类的构造顺序按给定的顺序，析构反之
-[cpp]view plaincopy
-class father  
-{  
-public:  
-    father(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"father construct"< endlspan>
-    ~father(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"father delete"< endlspan>
-};  
-class mother  
-{  
-public:  
-    mother(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"mother construct"< endlspan>
-    ~mother(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"mother delete"< endlspan>
-};  
-class son : public father, public mother  
-{  
-public:  
-    son(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"son construct"< endlspan>
-    ~son(){cout< span style='font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, ' Courier New Courier mono serifcolorrgb >"son delete"< endlspan>
-};  
-int main()  
-{  
-    son s;  
-return 0;  
-}  
-输出：
+<p>&nbsp;</p>
 
-father construct
-mother construct
-son construct
-son delete
-mother delete
-father delete
+<h2>2.继承关系对基类成员的影响</h2>
 
-3.利用基类的构造函数构造子类，效率更高
-[cpp]view plaincopy
-class father  
-{  
-int x;  
-public:  
-    father(int a):x(a){cout< span>"father construct:"< xendl>
-};  
-class son : public father  
-{  
-int y;  
-public:  
-    son(int a, int b):father(a), y(b){cout< span>"son construct:"< yendl>
-};  
-int main()  
-{  
-    son s(1, 2);  
-return 0;  
-}  
+<table border="1" cellpadding="1" cellspacing="1" style="width:225px">
+	<tbody>
+		<tr>
+			<td>&nbsp;</td>
+			<td>公有成员</td>
+			<td>保护成员</td>
+			<td>私有成员</td>
+		</tr>
+		<tr>
+			<td>公有继承</td>
+			<td>公有</td>
+			<td>保护</td>
+			<td>不可访问</td>
+		</tr>
+		<tr>
+			<td>保护继承</td>
+			<td>保护</td>
+			<td>保护</td>
+			<td>不可访问</td>
+		</tr>
+		<tr>
+			<td>私有继承</td>
+			<td>私有</td>
+			<td>私有</td>
+			<td>不可访问</td>
+		</tr>
+		<tr>
+			<td>成员函数</td>
+			<td>1</td>
+			<td>1</td>
+			<td>1</td>
+		</tr>
+		<tr>
+			<td>对象</td>
+			<td>1</td>
+			<td>0</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<td>子类</td>
+			<td>1</td>
+			<td>1</td>
+			<td>0</td>
+		</tr>
+	</tbody>
+</table>
 
-输出：
+<p>1：可以访问 0：不可访问</p>
 
-father construct:1
-son construct:2
+<p>当所有成员都变成不可访问时，再往下派生就没有意义了</p>
 
+<p><strong>二、子类的构造与析构</strong></p>
 
-三、多重继承
-1.多重继续的二义性，根本原因是
+<p>1.构造派生类对象时，先执行基类的构造函数，再执行子类的构造函数，析构反之</p>
 
+<p><strong>[cpp]</strong>view plaincopy</p>
 
+<ol>
+	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;construct&quot;&lt; endlspan&gt;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;~father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;delete&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;construct&quot;&lt; endlspan&gt;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;~son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;delete&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
 
-假如A有Test()，则B和C都有Test()，于是D产生了二义性
+<p>&nbsp;</p>
 
-[cpp]view plaincopy
-class A  
-{  
-public:  
-void Test(){cout< span>"A"< endlspan>
-};  
-class B  
-{  
-public:  
-void Test(){cout< span>"B"< endlspan>
-};  
-class C : public A, public B  
-{  
-};  
-int main()  
-{  
-    C c;             
-    c.Test();      //错误
-    c.A::Test();   //正确，输出：A
-    c.B::Test();   //正确，输出：B
-return 0;  
-}  
+<p>输出：</p>
 
-2.编译器通常都是从离自己最近的目录树向上搜索的
-子类的Test()覆盖了基类的Test()，并不代表基类的Test()消失，只是不能直接访问
+<p>father construct<br />
+son construct<br />
+son delete<br />
+father delete</p>
 
-[cpp]view plaincopy
-class A  
-{  
-public:  
-void Test(){cout< span>"A"< endlspan>
-};  
-class B  
-{  
-public:  
-void Test(){cout< span>"B"< endlspan>
-};  
-class C : public A, public B  
-{  
-void Test(){cout< span>"C"< endlspan>
-};  
-int main()  
-{  
-    C c;             
-    c.Test();      //正确，输出：C
-    c.A::Test();   //正确，输出：A
-    c.B::Test();   //正确，输出：B
-return 0;  
-}  
+<p>2.如果是多重继承，基类的构造顺序按给定的顺序，析构反之</p>
 
+<p><strong>[cpp]</strong>view plaincopy</p>
 
-3.对于单一继承，子类能否访问父类的父类，只与继承的方式有关
+<ol>
+	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;construct&quot;&lt; endlspan&gt;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;~father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;delete&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;mother&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;mother(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;mother&nbsp;construct&quot;&lt; endlspan&gt;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;~mother(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;mother&nbsp;delete&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father,&nbsp;<strong>public</strong>&nbsp;mother&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;construct&quot;&lt; endlspan&gt;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;~son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;delete&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
 
-对于多重继承，子类不能直接访问父类的父类。
+<p>输出：</p>
 
-4.用virtual来避免二义性。
+<p>father construct<br />
+mother construct<br />
+son construct<br />
+son delete<br />
+mother delete<br />
+father delete</p>
 
-class B : virtual public A.
+<p>3.利用基类的构造函数构造子类，效率更高</p>
 
+<p><strong>[cpp]</strong>view plaincopy</p>
 
+<ol>
+	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;x;&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(<strong>int</strong>&nbsp;a):x(a){cout&lt; span&gt;&quot;father&nbsp;construct:&quot;&lt; xendl&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;y;&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(<strong>int</strong>&nbsp;a,&nbsp;<strong>int</strong>&nbsp;b):father(a),&nbsp;y(b){cout&lt; span&gt;&quot;son&nbsp;construct:&quot;&lt; yendl&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s(1,&nbsp;2);&nbsp;&nbsp;</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
 
-四、继承与包含
-1.一个类的成员变量列表中包含另一个类的对象，叫做包含（包容）。
+<p>&nbsp;</p>
 
-2.包含与私有继承的区别：
-包含：
+<p>输出：</p>
 
-1）使程序看上去更清晰易懂
+<p>father construct:1<br />
+son construct:2</p>
 
-2）不存在继承带来的问题
+<p>&nbsp;</p>
 
-3）可以包括另一个类的多个对象
+<p><strong>三、多重继承</strong></p>
 
-私有继承：
+<p>1.多重继续的二义性，根本原因是</p>
 
-1）可以访问基类的保护成员
+<p>&nbsp;</p>
 
-2）可以重定义虚函数，实现多态
+<p><img src="file:///C:/Users/liushuisheng/AppData/Local/youdao/ynote/images/62152C48CC58479186A6BAB3C35A137D/0_1326786263XRpI.gif.png" style="height:159px; width:161px" /></p>
+
+<p>假如A有Test()，则B和C都有Test()，于是D产生了二义性</p>
+
+<p><strong>[cpp]</strong>view plaincopy</p>
+
+<ol>
+	<li><strong>class</strong>&nbsp;A&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;A&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;B&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;B&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;C&nbsp;:&nbsp;<strong>public</strong>&nbsp;A,&nbsp;<strong>public</strong>&nbsp;B&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.Test();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//错误</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.A::Test();&nbsp;&nbsp;&nbsp;//正确，输出：A</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.B::Test();&nbsp;&nbsp;&nbsp;//正确，输出：B</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
+
+<p><br />
+2.编译器通常都是从离自己最近的目录树向上搜索的</p>
+
+<p>子类的Test()覆盖了基类的Test()，并不代表基类的Test()消失，只是不能直接访问</p>
+
+<p><strong>[cpp]</strong>view plaincopy</p>
+
+<ol>
+	<li><strong>class</strong>&nbsp;A&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;A&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;B&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>public</strong>:&nbsp;&nbsp;</li>
+	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;B&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>class</strong>&nbsp;C&nbsp;:&nbsp;<strong>public</strong>&nbsp;A,&nbsp;<strong>public</strong>&nbsp;B&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;C&quot;&lt; endlspan&gt;</li>
+	<li>};&nbsp;&nbsp;</li>
+	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
+	<li>{&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.Test();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//正确，输出：C</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.A::Test();&nbsp;&nbsp;&nbsp;//正确，输出：A</li>
+	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.B::Test();&nbsp;&nbsp;&nbsp;//正确，输出：B</li>
+	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
+	<li>}&nbsp;&nbsp;</li>
+</ol>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+
+<p>3.对于单一继承，子类能否访问父类的父类，只与继承的方式有关</p>
+
+<p>对于多重继承，子类不能直接访问父类的父类。</p>
+
+<p>4.用virtual来避免二义性。</p>
+
+<p>class B : virtual public A.</p>
+
+<p>&nbsp;</p>
+
+<p><strong>四、继承与包含</strong></p>
+
+<p>1.一个类的成员变量列表中包含另一个类的对象，叫做包含（包容）。</p>
+
+<p>&nbsp;</p>
+
+<p>2.包含与私有继承的区别：</p>
+
+<p>包含：</p>
+
+<p>1）使程序看上去更清晰易懂</p>
+
+<p>2）不存在继承带来的问题</p>
+
+<p>3）可以包括另一个类的多个对象</p>
+
+<p>私有继承：</p>
+
+<p>1）可以访问基类的保护成员</p>
+
+<p>2）可以重定义虚函数，实现多态</p>
