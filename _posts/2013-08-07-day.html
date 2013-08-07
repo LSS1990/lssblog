@@ -13,28 +13,6 @@
 
 <p>虚基类的引用或派生不能转换为派生类</p>
 
-<p>&nbsp;</p>
-
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;father{};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;son:<strong>public</strong>&nbsp;father{};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;f;&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;=&nbsp;s;//正确</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;=&nbsp;f;//错误</li>
-	<li>&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;*pf&nbsp;=&nbsp;<strong>new</strong>&nbsp;son;//正确</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;*ps&nbsp;=&nbsp;<strong>new</strong>&nbsp;father;//错误</li>
-	<li>&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;&amp;rf&nbsp;=&nbsp;s;//正确</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father&nbsp;&amp;rs&nbsp;=&nbsp;f;//错误</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
 
 <p>&nbsp;</p>
 
@@ -95,108 +73,13 @@
 
 <p>1.构造派生类对象时，先执行基类的构造函数，再执行子类的构造函数，析构反之</p>
 
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;construct&quot;&lt; endlspan&gt;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;~father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;delete&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;construct&quot;&lt; endlspan&gt;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;~son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;delete&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
-
 <p>&nbsp;</p>
-
-<p>输出：</p>
-
-<p>father construct<br />
-son construct<br />
-son delete<br />
-father delete</p>
 
 <p>2.如果是多重继承，基类的构造顺序按给定的顺序，析构反之</p>
 
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;construct&quot;&lt; endlspan&gt;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;~father(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;father&nbsp;delete&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;mother&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;mother(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;mother&nbsp;construct&quot;&lt; endlspan&gt;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;~mother(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;mother&nbsp;delete&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father,&nbsp;<strong>public</strong>&nbsp;mother&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;construct&quot;&lt; endlspan&gt;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;~son(){cout&lt; span style=&#39;font-size:12px;font-style:normal;font-weight:normal;font-family:Consolas, &#39; Courier New Courier mono serifcolorrgb &gt;&quot;son&nbsp;delete&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s;&nbsp;&nbsp;</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
-
-<p>输出：</p>
-
-<p>father construct<br />
-mother construct<br />
-son construct<br />
-son delete<br />
-mother delete<br />
-father delete</p>
 
 <p>3.利用基类的构造函数构造子类，效率更高</p>
 
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;father&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;x;&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;father(<strong>int</strong>&nbsp;a):x(a){cout&lt; span&gt;&quot;father&nbsp;construct:&quot;&lt; xendl&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;son&nbsp;:&nbsp;<strong>public</strong>&nbsp;father&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;y;&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son(<strong>int</strong>&nbsp;a,&nbsp;<strong>int</strong>&nbsp;b):father(a),&nbsp;y(b){cout&lt; span&gt;&quot;son&nbsp;construct:&quot;&lt; yendl&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;son&nbsp;s(1,&nbsp;2);&nbsp;&nbsp;</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
-
-<p>&nbsp;</p>
-
-<p>输出：</p>
-
-<p>father construct:1<br />
-son construct:2</p>
-
-<p>&nbsp;</p>
 
 <p><strong>三、多重继承</strong></p>
 
@@ -208,67 +91,12 @@ son construct:2</p>
 
 <p>假如A有Test()，则B和C都有Test()，于是D产生了二义性</p>
 
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;A&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;A&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;B&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;B&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;C&nbsp;:&nbsp;<strong>public</strong>&nbsp;A,&nbsp;<strong>public</strong>&nbsp;B&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.Test();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//错误</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.A::Test();&nbsp;&nbsp;&nbsp;//正确，输出：A</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.B::Test();&nbsp;&nbsp;&nbsp;//正确，输出：B</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
 
 <p><br />
 2.编译器通常都是从离自己最近的目录树向上搜索的</p>
 
 <p>子类的Test()覆盖了基类的Test()，并不代表基类的Test()消失，只是不能直接访问</p>
 
-<p><strong>[cpp]</strong>view plaincopy</p>
-
-<ol>
-	<li><strong>class</strong>&nbsp;A&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;A&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;B&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>public</strong>:&nbsp;&nbsp;</li>
-	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;B&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>class</strong>&nbsp;C&nbsp;:&nbsp;<strong>public</strong>&nbsp;A,&nbsp;<strong>public</strong>&nbsp;B&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li><strong>void</strong>&nbsp;Test(){cout&lt; span&gt;&quot;C&quot;&lt; endlspan&gt;</li>
-	<li>};&nbsp;&nbsp;</li>
-	<li><strong>int</strong>&nbsp;main()&nbsp;&nbsp;</li>
-	<li>{&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;c;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.Test();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//正确，输出：C</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.A::Test();&nbsp;&nbsp;&nbsp;//正确，输出：A</li>
-	<li>&nbsp;&nbsp;&nbsp;&nbsp;c.B::Test();&nbsp;&nbsp;&nbsp;//正确，输出：B</li>
-	<li><strong>return</strong>&nbsp;0;&nbsp;&nbsp;</li>
-	<li>}&nbsp;&nbsp;</li>
-</ol>
-
-<p>&nbsp;</p>
-
-<p>&nbsp;</p>
 
 <p>3.对于单一继承，子类能否访问父类的父类，只与继承的方式有关</p>
 
